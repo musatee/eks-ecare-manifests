@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: deployment-ecare-prod
+  namespace: ecare-prod
+spec: 
+  replicas: 3 
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 50%
+    type: RollingUpdate
+
+  selector:
+    matchLabels: 
+      app: ecare-prod   
+  template:
+    metadata:
+      name: pods-ecare
+      labels:
+        app: ecare-prod
+    spec:
+      initContainers:
+        - 
+          args: 
+            - "/bin/bash"
+            - -c
+            - (echo "${allenvs}" > .env && echo "${mysqlsecretenv}" >> .env && key=$(php artisan key:generate --show) && sed -i "s#^APP_KEY=.*#APP_KEY=$key#g" .env && php artisan config:cache && php artisan migrate --force && chown -R application:application . && chmod -R 755 . && chmod -R o+w ./storage && cp -rp . /new)
+          
+          env: 
+            -  
+              name: allenvs
+              valueFrom: 
+                configMapKeyRef:
+                  key: allenvs
+                  name: backend-config
+            -  
+              name: mysqlsecretenv 
+              valueFrom:  
+                secretKeyRef:   
+                  key: secretval 
+                  name: mysql-pass
+            
+          name: init-app
+          image: 115391213665.dkr.ecr.ap-southeast-1.amazonaws.com/demo-app:latest
+          imagePullPolicy: Always 
+          volumeMounts:
+            - mountPath: /new
+              name: codebase
+
+      imagePullSecrets:
+        - 
+          name: dockerregistrykey
+
+      containers:
+        - 
+          name: demo-app
+          image: 115391213665.dkr.ecr.ap-southeast-1.amazonaws.com/demo-app:latest
+          imagePullPolicy: Always
+          ports:
+            - 
+              containerPort: 80
+          livenessProbe:
+            initialDelaySeconds: 240
+            periodSeconds: 15
+            tcpSocket:
+              port: 80
+            timeoutSeconds: 5
+            failureThreshold: 3  
+
+          volumeMounts:
+            - mountPath: /app
+              name: codebase
+
+      imagePullSecrets:
+        - 
+          name: dockerregistrykey
+
+      volumes: 
+        - 
+          name: codebase
+          persistentVolumeClaim:
+            claimName: pvc-app

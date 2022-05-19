@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: 
+ name: pvc-app
+ namespace: ecare-prod
+spec: 
+ accessModes: 
+   - ReadWriteOnce 
+ resources: 
+   requests: 
+     storage: 10Gi
+ storageClassName: sc-gp2

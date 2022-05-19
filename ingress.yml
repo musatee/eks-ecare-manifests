@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: ecare-prod
+  name: ingress-ecare
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-southeast-1:115391213665:certificate/1fdedcff-e730-4aeb-a794-106976a3fb33 
+spec:
+  ingressClassName: alb
+  #  tls:
+  #  - 
+  #    hosts:
+  #      - akmusa.tk
+  rules:
+    - 
+      host: akmusa.tk
+      http:
+        paths:
+
+          - 
+            path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: firstservice
+                port:
+                  number: 80
+
+
