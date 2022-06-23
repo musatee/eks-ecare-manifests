@@ -42,7 +42,7 @@ spec:
                   name: mysql-pass
             
           name: init-app
-          image: 115391213665.dkr.ecr.ap-southeast-1.amazonaws.com/demo-app:latest
+          image: xxxxxxxxx.dkr.ecr.ap-southeast-1.amazonaws.com/ecare-app:latest
           imagePullPolicy: Always 
           volumeMounts:
             - mountPath: /new
@@ -55,7 +55,7 @@ spec:
       containers:
         - 
           name: demo-app
-          image: 115391213665.dkr.ecr.ap-southeast-1.amazonaws.com/demo-app:latest
+          image: xxxxxxxxx.dkr.ecr.ap-southeast-1.amazonaws.com/ecare-app:latest
           imagePullPolicy: Always
           ports:
             - 

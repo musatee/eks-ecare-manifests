@@ -4,17 +4,15 @@ data:
     APP_NAME=Laravel
     APP_ENV=local
     APP_KEY=
-    APP_DEBUG=true
+    APP_DEBUG=false
     APP_URL=http://localhost
 
     LOG_CHANNEL=daily
     LOG_LEVEL=debug
 
     DB_CONNECTION=mysql
-    DB_HOST=dbsvc
+    DB_HOST=ecare-db.xxxxxxxxxx.ap-southeast-1.rds.amazonaws.com
     DB_PORT=3306
-    DB_DATABASE=ecare
-    DB_USERNAME=ecare
     
     BROADCAST_DRIVER=log
     CACHE_DRIVER=file
@@ -22,9 +20,9 @@ data:
     SESSION_DRIVER=file
     SESSION_LIFETIME=120
 
-    MEMCACHED_HOST=127.0.0.1
+    MEMCACHED_HOST=
 
-    REDIS_HOST=127.0.0.1
+    REDIS_HOST=
     REDIS_PASSWORD=null
     REDIS_PORT=6379
 
@@ -39,7 +37,7 @@ data:
 
     AWS_ACCESS_KEY_ID=
     AWS_SECRET_ACCESS_KEY=
-    AWS_DEFAULT_REGION=us-east-1
+    AWS_DEFAULT_REGION=
     AWS_BUCKET=
 
     PUSHER_APP_ID=
@@ -50,12 +48,12 @@ data:
     MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
     MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 
-    FAST_SMS_KEY = "$2y$10$DNZCfxNNp5U57oKEO3Ze1.j57WrFZj1XiW5y4C4dfkpXV6H17DplG28"
+    FAST_SMS_KEY = 
 
-    ALGOLIA_APP_ID=UFPO9OW7XY
-    ALGOLIA_SECRET=ce1e425ed3526fdf94baf7694a0a8b5b
+    ALGOLIA_APP_ID=
+    ALGOLIA_SECRET=
 
-    JWT_SECRET=5Nu9GRRKTR5z75jDZUoTDoSOoHh2cjn7ZWIZtE5zDcv6G9mDM8t26ow8RtfgKNUw
+    JWT_SECRET=
 
 
 kind: ConfigMap
